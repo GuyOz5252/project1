@@ -1,5 +1,5 @@
 use crate::components::{Movement, Player, Velocity};
-use crate::{PLAYER_ACCELERATION, PLAYER_MOVEMENT_SPEED, PLAYER_SPRINT_MULTIPLIER, SPRITE_SCALE};
+use crate::{CAMERA_SPEED, PLAYER_ACCELERATION, PLAYER_MOVEMENT_SPEED, PLAYER_SPRINT_MULTIPLIER, SPRITE_SCALE};
 use bevy::asset::AssetServer;
 use bevy::math::Vec3;
 use bevy::prelude::*;
@@ -60,13 +60,10 @@ fn camera_follow_player_system(
 ) {
     let mut camera_transform = camera_query.single_mut();
     let player_transform = player_query.single();
-    
-
-    let camera_speed = 3.0;
 
     camera_transform.translation = camera_transform.translation.lerp(
         player_transform.translation,
-        camera_speed * time.delta_secs(),
+        CAMERA_SPEED * time.delta_secs(),
     );
 }
 

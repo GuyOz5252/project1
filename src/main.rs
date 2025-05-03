@@ -9,6 +9,7 @@ const SPRITE_SCALE: f32 = 0.2;
 const PLAYER_MOVEMENT_SPEED: f32 = 300.0;
 const PLAYER_SPRINT_MULTIPLIER: f32 = 2.0;
 const PLAYER_ACCELERATION: f32 = 10.0;
+const CAMERA_SPEED: f32 = 3.0;
 
 fn main() {
     App::new()
