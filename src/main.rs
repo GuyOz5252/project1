@@ -2,7 +2,6 @@ mod player;
 mod components;
 
 use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
 use crate::components::Velocity;
 use crate::player::PlayerPlugin;
 
