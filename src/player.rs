@@ -69,7 +69,7 @@ fn camera_follow_player_system(
 
 fn player_input_system(
     keyboard: Res<ButtonInput<KeyCode>>,
-    mut query: Query<(&mut Velocity, &Movement), With<Player>>,
+    mut player_query: Query<(&mut Velocity, &Movement), With<Player>>,
     time: Res<Time>,
 ) {
     let mut direction = Vec3::ZERO;
@@ -84,7 +84,7 @@ fn player_input_system(
         direction = direction.normalize();
     }
 
-    if let Ok((mut player_velocity, movement)) = query.get_single_mut() {
+    if let Ok((mut player_velocity, movement)) = player_query.get_single_mut() {
         player_velocity.velocity = player_velocity.velocity.lerp(
             direction * movement.speed * movement.speed_multiplier,
             movement.acceleration * time.delta_secs(),
@@ -94,9 +94,9 @@ fn player_input_system(
 
 fn player_sprint_system(
     keyboard: Res<ButtonInput<KeyCode>>,
-    mut query: Query<&mut Movement, With<Player>>,
+    mut player_query: Query<&mut Movement, With<Player>>,
 ) {
-    let mut movement = query.single_mut();
+    let mut movement = player_query.single_mut();
 
     if keyboard.pressed(KeyCode::ShiftLeft) {
         movement.speed_multiplier = PLAYER_SPRINT_MULTIPLIER;
@@ -106,13 +106,13 @@ fn player_sprint_system(
 }
 
 fn player_look_system(
-    window: Query<&Window, With<PrimaryWindow>>,
-    camera: Query<(&Camera, &GlobalTransform), With<Camera2d>>,
-    mut player: Query<&mut Transform, With<Player>>,
+    window_query: Query<&Window, With<PrimaryWindow>>,
+    camera_query: Query<(&Camera, &GlobalTransform)>,
+    mut player_query: Query<&mut Transform, With<Player>>,
 ) {
-    let window = window.single();
-    let (camera, camera_transform) = camera.single();
-    let mut player_transform = player.single_mut();
+    let window = window_query.single();
+    let (camera, camera_transform) = camera_query.single();
+    let mut player_transform = player_query.single_mut();
 
     if let Some(curser_position) = window.cursor_position() {
         if let Ok(world_position) = camera.viewport_to_world_2d(camera_transform, curser_position) {

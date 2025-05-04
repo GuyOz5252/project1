@@ -25,3 +25,6 @@ impl Default for Movement {
         }
     }
 }
+
+#[derive(Component)]
+pub struct Cursor;
