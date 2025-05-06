@@ -1,12 +1,21 @@
 use bevy::math::Vec3;
-use bevy::prelude::Component;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Velocity {
     pub velocity: Vec3
 }
 
+impl Default for Velocity {
+    fn default() -> Self {
+        Self {
+            velocity: Vec3::ZERO
+        }
+    }
+}
+
 #[derive(Component)]
+#[require(Sprite, Transform, Velocity, Movement)]
 pub struct Player;
 
 #[derive(Component)]

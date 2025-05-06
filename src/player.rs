@@ -26,24 +26,17 @@ impl Plugin for PlayerPlugin {
 
 fn spawn_player(
     mut commands: Commands,
-    window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,
 ) {
-    let window = window_query.single();
-
     commands.spawn((
+        Player,
         Sprite {
             image: asset_server.load("images/soldier.png"),
             ..Default::default()
         },
         Transform {
-            translation: Vec3::new(window.width() / 2.0, window.height() / 2.0, 0.0),
             scale: Vec3::new(SPRITE_SCALE, SPRITE_SCALE, 1.0),
             ..Default::default()
-        },
-        Player,
-        Velocity {
-            velocity: Vec3::ZERO,
         },
         Movement {
             speed: PLAYER_MOVEMENT_SPEED,

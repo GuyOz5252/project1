@@ -65,13 +65,7 @@ fn update_cursor(
 }
 
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn((
-        Camera2d {},
-        Transform {
-            translation: Vec3::ZERO,
-            ..Default::default()
-        },
-    ));
+    commands.spawn(Camera2d);
 }
 
 fn movement_system(mut query: Query<(&Velocity, &mut Transform)>, time: Res<Time>) {
